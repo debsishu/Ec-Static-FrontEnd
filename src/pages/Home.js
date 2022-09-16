@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import Nav from "../components/Navigation/Nav";
 
 function Home() {
-	return (
-		<div>Home Repo</div>
-	)
+  return (
+    <div>
+      <Nav />
+    </div>
+  );
 }
 
-export default Home
+export default Home;
