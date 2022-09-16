@@ -1,10 +1,20 @@
 import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { FiSearch } from "react-icons/fi";
 import { IconContext } from "react-icons";
+// import axios from "axios";
 
 function Nav() {
+  const searchEffect = (event) => {
+    if (event.key === "Enter") {
+      setQuery("");
+      //API call to be implemented
+    }
+  };
+  const [query, setQuery] = useState("");
+
   return (
     <div>
       <NavBar>
@@ -23,6 +33,9 @@ function Nav() {
           <input
             type="text"
             placeholder="Type something to search from the posts"
+            onChange={(e) => setQuery(e.target.value)}
+            value={query}
+            onKeyPress={searchEffect}
           />
         </SearchBar>
         <Profile>
