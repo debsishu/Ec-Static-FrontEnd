@@ -9,7 +9,11 @@ function Nav() {
     <div>
       <NavBar>
         <Link to="/">
-          <img className="logo" src="./Logo.svg" alt="Ec-Static Logo Here" />
+          <img
+            className="logo"
+            src="./assets/Logo.svg"
+            alt="Ec-Static Logo Here"
+          />
         </Link>
         <SearchBar>
           <IconContext.Provider
