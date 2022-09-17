@@ -84,15 +84,18 @@ const Buttons = styled.div`
     outline: none;
     border: none;
     color: white;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-family: "Euclid Circular A", sans-serif;
     padding: 0.8rem 1.8rem;
     background-color: #237bff;
     border-radius: 0.2rem;
+    cursor: pointer;
+    font-weight: 500;
   }
 
   p {
     margin-bottom: 1.2rem;
+    font-weight: 300;
   }
 `;
 
@@ -168,11 +171,13 @@ const Inputs = styled.div`
     font-family: "Euclid Circular A", sans-serif;
   }
 
+  input::placeholder {
+    font-size: 0.9rem;
+    margin-bottom: 1.4rem;
+  }
+
   p {
     font-size: 0.9rem;
-  }
-  input ::placeholder {
-    margin-bottom: 1.4rem;
   }
 
   .input-fields {

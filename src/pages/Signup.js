@@ -43,7 +43,7 @@ function Signup() {
               </div>
               <Buttons>
                 <p>
-                  Already Have Account,{" "}
+                  Already Have an Account?{" "}
                   <Link
                     style={{
                       color: "#67A4FF",
@@ -110,6 +110,8 @@ const Buttons = styled.div`
     padding: 0.8rem 1.8rem;
     background-color: #237bff;
     border-radius: 0.3rem;
+    cursor: pointer;
+    font-weight: 500;
   }
 `;
 
