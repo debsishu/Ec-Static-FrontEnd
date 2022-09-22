@@ -1,7 +1,7 @@
 import React from 'react'
 import Nav from "../components/Navigation/Nav";
 
-function Profile() {
+function Club() {
   return (
     <div>
     <div><Nav /></div>
@@ -10,4 +10,4 @@ function Profile() {
   )
 }
 
-export default Profile
+export default Club
