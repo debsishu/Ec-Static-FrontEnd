@@ -1,8 +1,27 @@
-import React from "react";
+import React,{ useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import axios from "axios";
 
 function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  async function handleLogin() {
+    if (!username || !password) alert("Please Enter all the details");
+    const res = await axios.post(
+      process.env.REACT_APP_BACKEND_URL + "login",
+      {
+        username: username,
+        password: password,
+      },
+      { withCredentials: true }
+    );
+    localStorage.setItem("username", res.data.username);
+    localStorage.setItem("userId", res.data.id);
+    //console.log(res);
+  }
+
   return (
     <Parent>
       <Left>
@@ -24,13 +43,24 @@ function Login() {
             <Inputs>
               <div className="input-fields">
                 <p>Username</p>
-                <input type="text" placeholder="Please Enter Your Username" />
+                <input
+                  type="text"
+                  placeholder="Please Enter Your Username"
+                  value={username}
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                  }}
+                />
               </div>
               <div className="input-fields">
                 <p>Password</p>
                 <input
                   type="password"
                   placeholder="Please Enter Your Password"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
                 />
               </div>
               <div className="input-fields">
@@ -57,7 +87,7 @@ function Login() {
                     </p>
                   </div>
 
-                  <button>Login</button>
+                  <button onClick={handleLogin}>Login</button>
                 </Buttons>
               </div>
             </Inputs>
