@@ -1,8 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import axios from "axios";
 
 function Signup() {
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  async function handleSignup() {
+    if (!name || !username || !email || !password) {
+      alert("Please enter all the informations");
+    }
+    const res = await axios.post(
+      process.env.REACT_APP_BACKEND_URL + "register",
+      {
+        name: name,
+        username: username,
+        email: email,
+        password: password,
+      },
+      { withCredentials: true }
+    );
+    localStorage.setItem("username", res.data.username);
+    localStorage.setItem("userId", res.data.id);
+  }
+
   return (
     <Parent>
       <Left>
@@ -24,21 +48,46 @@ function Signup() {
             <Inputs>
               <div className="input-fields">
                 <p>Name</p>
-                <input type="text" placeholder="Please Enter your name" />
+                <input
+                  type="text"
+                  placeholder="Please Enter your name"
+                  value={name}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
+                />
               </div>
               <div className="input-fields">
                 <p>Username</p>
-                <input type="text" placeholder="Please Enter your username" />
+                <input
+                  type="text"
+                  placeholder="Please Enter your username"
+                  value={username}
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                  }}
+                />
               </div>
               <div className="input-fields">
                 <p>E-Mail</p>
-                <input type="email" placeholder="Please Enter your E-Mail" />
+                <input
+                  type="email"
+                  placeholder="Please Enter your E-Mail"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                />
               </div>
               <div className="input-fields">
                 <p>Password</p>
                 <input
                   type="password"
                   placeholder="Please Enter your passowrd"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
                 />
               </div>
               <Buttons>
@@ -54,7 +103,7 @@ function Signup() {
                     Login
                   </Link>
                 </p>
-                <button>Sign Up</button>
+                <button onClick={handleSignup}>Sign Up</button>
               </Buttons>
             </Inputs>
           </Box>
