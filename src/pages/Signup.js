@@ -20,11 +20,11 @@ function Signup() {
         username: username,
         email: email,
         password: password,
-      },
-      { withCredentials: true }
+      }
     );
     localStorage.setItem("username", res.data.username);
     localStorage.setItem("userId", res.data.id);
+    localStorage.setItem("token", res.data.token);
   }
 
   return (

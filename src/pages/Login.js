@@ -9,17 +9,13 @@ function Login() {
 
   async function handleLogin() {
     if (!username || !password) alert("Please Enter all the details");
-    const res = await axios.post(
-      process.env.REACT_APP_BACKEND_URL + "login",
-      {
-        username: username,
-        password: password,
-      },
-      { withCredentials: true }
-    );
+    const res = await axios.post(process.env.REACT_APP_BACKEND_URL + "login", {
+      username: username,
+      password: password,
+    });
     localStorage.setItem("username", res.data.username);
     localStorage.setItem("userId", res.data.id);
-    //console.log(res);
+    localStorage.setItem("token", res.data.token);
   }
 
   return (
