@@ -5,19 +5,27 @@ import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import Club from "./pages/Club";
 import GlobalStyle from "./styles/globalStyles";
+import { UserContext } from "./context/Context";
+import { useState } from "react";
 
 function App() {
+  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
+  const value = { username, setUsername, name, setName };
+
   return (
-    <Router>
-      <GlobalStyle />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/club" element={<Club />} />
-      </Routes>
-    </Router>
+    <UserContext.Provider value={value}>
+      <Router>
+        <GlobalStyle />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/club" element={<Club />} />
+        </Routes>
+      </Router>
+    </UserContext.Provider>
   );
 }
 

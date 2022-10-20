@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   async function handleSignup() {
     if (!name || !username || !email || !password) {
@@ -22,9 +24,11 @@ function Signup() {
         password: password,
       }
     );
+    localStorage.setItem("name", res.data.name);
     localStorage.setItem("username", res.data.username);
     localStorage.setItem("userId", res.data.id);
     localStorage.setItem("token", res.data.token);
+    navigate("/");
   }
 
   return (

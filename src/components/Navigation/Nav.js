@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { FiSearch } from "react-icons/fi";
 import { IconContext } from "react-icons";
+import { UserContext } from "../../context/Context";
 
 function Nav() {
+  const { name } = useContext(UserContext);
   return (
     <div>
       <NavBar>
@@ -30,7 +32,7 @@ function Nav() {
           />
         </SearchBar>
         <Profile>
-          <p>Hi, Martha</p>
+          <p>Hi, {name}</p>
           <Link to="/profile">
             <img
               className="profile"

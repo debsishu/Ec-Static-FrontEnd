@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 
@@ -7,15 +7,19 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
+
   async function handleLogin() {
     if (!username || !password) alert("Please Enter all the details");
     const res = await axios.post(process.env.REACT_APP_BACKEND_URL + "login", {
       username: username,
       password: password,
     });
+    localStorage.setItem("name", res.data.name);
     localStorage.setItem("username", res.data.username);
     localStorage.setItem("userId", res.data.id);
     localStorage.setItem("token", res.data.token);
+    navigate("/");
   }
 
   return (
