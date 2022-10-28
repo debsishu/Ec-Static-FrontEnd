@@ -3,18 +3,22 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { TailSpin } from "react-loading-icons";
 
 function Signup() {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
 
   async function handleSignup() {
     if (!name || !username || !email || !password) {
       alert("Please enter all the informations");
     }
+    setIsLoading(true);
     const res = await axios.post(
       process.env.REACT_APP_BACKEND_URL + "register",
       {
@@ -28,6 +32,7 @@ function Signup() {
     localStorage.setItem("username", res.data.username);
     localStorage.setItem("userId", res.data.id);
     localStorage.setItem("token", res.data.token);
+    setIsLoading(false);
     navigate("/");
   }
 
@@ -107,7 +112,20 @@ function Signup() {
                     Login
                   </Link>
                 </p>
-                <button onClick={handleSignup}>Sign Up</button>
+                {isLoading && (
+                  <button>
+                    <TailSpin
+                      style={{
+                        height: "1.6rem",
+                      }}
+                    />
+                  </button>
+                )}
+                {!isLoading && (
+                  <button className="sign-btn" onClick={handleSignup}>
+                    Sign Up
+                  </button>
+                )}
               </Buttons>
             </Inputs>
           </Box>
@@ -158,12 +176,16 @@ const Buttons = styled.div`
     outline: none;
     border: none;
     color: white;
-    font-family: "Euclid Circular A", sans-serif;
-    font-size: 0.9rem;
-    padding: 0.8rem 1.8rem;
     background-color: #237bff;
     border-radius: 0.3rem;
     cursor: pointer;
+    padding: 0.45rem 2.1rem;
+  }
+
+  .sign-btn {
+    font-family: "Euclid Circular A", sans-serif;
+    font-size: 0.9rem;
+    padding: 0.8rem 1.8rem;
     font-weight: 500;
   }
 `;

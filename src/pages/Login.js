@@ -2,15 +2,18 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
+import { TailSpin } from "react-loading-icons";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
   async function handleLogin() {
     if (!username || !password) alert("Please Enter all the details");
+    setIsLoading(true);
     const res = await axios.post(process.env.REACT_APP_BACKEND_URL + "login", {
       username: username,
       password: password,
@@ -19,6 +22,7 @@ function Login() {
     localStorage.setItem("username", res.data.username);
     localStorage.setItem("userId", res.data.id);
     localStorage.setItem("token", res.data.token);
+    setIsLoading(false);
     navigate("/");
   }
 
@@ -87,7 +91,20 @@ function Login() {
                     </p>
                   </div>
 
-                  <button onClick={handleLogin}>Login</button>
+                  {isLoading && (
+                    <button>
+                      <TailSpin
+                        style={{
+                          height: "1.6rem",
+                        }}
+                      />
+                    </button>
+                  )}
+                  {!isLoading && (
+                    <button className="login-btn" onClick={handleLogin}>
+                      Login
+                    </button>
+                  )}
                 </Buttons>
               </div>
             </Inputs>
@@ -114,12 +131,16 @@ const Buttons = styled.div`
     outline: none;
     border: none;
     color: white;
-    font-size: 0.9rem;
-    font-family: "Euclid Circular A", sans-serif;
-    padding: 0.8rem 1.8rem;
     background-color: #237bff;
     border-radius: 0.2rem;
     cursor: pointer;
+    padding: 0.45rem 1.8rem;
+  }
+
+  .login-btn {
+    font-size: 0.9rem;
+    font-family: "Euclid Circular A", sans-serif;
+    padding: 0.8rem 1.8rem;
     font-weight: 500;
   }
 
