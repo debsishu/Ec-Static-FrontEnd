@@ -9,6 +9,7 @@ import GlobalStyle from "./styles/globalStyles";
 import { UserContext } from "./context/Context";
 import { useState } from "react";
 import JoinedClubs from "./components/JoinedClubs";
+import PopularClubs from "./components/PopularClubs";
 
 function App() {
   const [username, setUsername] = useState("");
@@ -27,6 +28,7 @@ function App() {
           <Route path="/club" element={<Club />} />
           <Route path="/post" element={<Post />} />
           <Route path="/joinedclubs" element={<JoinedClubs />} />
+          <Route path="/popularclubs" element={<PopularClubs />} />
         </Routes>
       </Router>
     </UserContext.Provider>
