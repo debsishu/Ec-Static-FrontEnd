@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import Club from "./pages/Club";
+import Post from "./components/Post";
 import GlobalStyle from "./styles/globalStyles";
 import { UserContext } from "./context/Context";
 import { useState } from "react";
@@ -23,6 +24,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/club" element={<Club />} />
+          <Route path="/post" element={<Post />} />
         </Routes>
       </Router>
     </UserContext.Provider>
