@@ -8,6 +8,7 @@ import Post from "./components/Post";
 import GlobalStyle from "./styles/globalStyles";
 import { UserContext } from "./context/Context";
 import { useState } from "react";
+import JoinedClubs from "./components/JoinedClubs";
 
 function App() {
   const [username, setUsername] = useState("");
@@ -25,6 +26,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/club" element={<Club />} />
           <Route path="/post" element={<Post />} />
+          <Route path="/joinedclubs" element={<JoinedClubs />} />
         </Routes>
       </Router>
     </UserContext.Provider>
