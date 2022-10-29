@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -15,11 +16,25 @@ function Login() {
       username: username,
       password: password,
     });
-    localStorage.setItem("name", res.data.name);
-    localStorage.setItem("username", res.data.username);
-    localStorage.setItem("userId", res.data.id);
-    localStorage.setItem("token", res.data.token);
-    navigate("/");
+    if (res.data.status === "invalid-username-or-password") {
+      toast.error("Invalid Username or password");
+    } else {
+      localStorage.setItem("name", res.data.name);
+      localStorage.setItem("username", res.data.username);
+      localStorage.setItem("userId", res.data.id);
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("profileImage", res.data.profileImageURL);
+      navigate("/");
+    }
+  }
+
+  function login() {
+    const myPromise = handleLogin();
+    toast.promise(myPromise, {
+      loading: "Loading",
+      success: "Successfully Logged In",
+      error: "Wrong username or password",
+    });
   }
 
   return (
@@ -86,8 +101,9 @@ function Login() {
                       </Link>
                     </p>
                   </div>
-
-                  <button onClick={handleLogin}>Login</button>
+                  <button className="login-btn" onClick={login}>
+                    Login
+                  </button>
                 </Buttons>
               </div>
             </Inputs>
@@ -114,12 +130,16 @@ const Buttons = styled.div`
     outline: none;
     border: none;
     color: white;
-    font-size: 0.9rem;
-    font-family: "Euclid Circular A", sans-serif;
-    padding: 0.8rem 1.8rem;
     background-color: #237bff;
     border-radius: 0.2rem;
     cursor: pointer;
+    padding: 0.45rem 1.8rem;
+  }
+
+  .login-btn {
+    font-size: 0.9rem;
+    font-family: "Euclid Circular A", sans-serif;
+    padding: 0.8rem 1.8rem;
     font-weight: 500;
   }
 

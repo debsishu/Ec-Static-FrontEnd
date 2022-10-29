@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 function Signup() {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
 
   async function handleSignup() {
@@ -28,7 +30,17 @@ function Signup() {
     localStorage.setItem("username", res.data.username);
     localStorage.setItem("userId", res.data.id);
     localStorage.setItem("token", res.data.token);
+    localStorage.setItem("profileImage", res.data.profileImageURL);
     navigate("/");
+  }
+
+  function signup() {
+    const myPromise = handleSignup();
+    toast.promise(myPromise, {
+      loading: "Loading",
+      success: "Successfully Logged In",
+      error: "Wrong username or password",
+    });
   }
 
   return (
@@ -107,7 +119,9 @@ function Signup() {
                     Login
                   </Link>
                 </p>
-                <button onClick={handleSignup}>Sign Up</button>
+                <button className="sign-btn" onClick={signup}>
+                  Sign Up
+                </button>
               </Buttons>
             </Inputs>
           </Box>
@@ -158,12 +172,16 @@ const Buttons = styled.div`
     outline: none;
     border: none;
     color: white;
-    font-family: "Euclid Circular A", sans-serif;
-    font-size: 0.9rem;
-    padding: 0.8rem 1.8rem;
     background-color: #237bff;
     border-radius: 0.3rem;
     cursor: pointer;
+    padding: 0.45rem 2.1rem;
+  }
+
+  .sign-btn {
+    font-family: "Euclid Circular A", sans-serif;
+    font-size: 0.9rem;
+    padding: 0.8rem 1.8rem;
     font-weight: 500;
   }
 `;

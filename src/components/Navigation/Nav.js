@@ -6,7 +6,7 @@ import { IconContext } from "react-icons";
 import { UserContext } from "../../context/Context";
 
 function Nav() {
-  const { name } = useContext(UserContext);
+  const { name, profileImage } = useContext(UserContext);
   return (
     <div>
       <NavBar>
@@ -36,7 +36,11 @@ function Nav() {
           <Link to="/profile">
             <img
               className="profile"
-              src="https://i.ibb.co/68fwhbt/shine-photos-Vkx-N5z-AVa7-A-unsplash.jpg"
+              src={
+                profileImage === undefined
+                  ? "https://img.myloview.com/stickers/default-avatar-profile-in-trendy-style-for-social-media-user-icon-400-228654852.jpg"
+                  : profileImage
+              }
               alt="Profile Here"
             />
           </Link>
