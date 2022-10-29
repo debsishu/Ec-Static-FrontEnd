@@ -22,6 +22,7 @@ function Home() {
     );
     user.setUsername(data.username);
     user.setName(data.name);
+    user.setProfileImage(data.profileImageURL);
     console.log(data);
   }
   return (

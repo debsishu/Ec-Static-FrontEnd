@@ -3,14 +3,13 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { TailSpin } from "react-loading-icons";
+import toast from "react-hot-toast";
 
 function Signup() {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -18,7 +17,6 @@ function Signup() {
     if (!name || !username || !email || !password) {
       alert("Please enter all the informations");
     }
-    setIsLoading(true);
     const res = await axios.post(
       process.env.REACT_APP_BACKEND_URL + "register",
       {
@@ -32,8 +30,17 @@ function Signup() {
     localStorage.setItem("username", res.data.username);
     localStorage.setItem("userId", res.data.id);
     localStorage.setItem("token", res.data.token);
-    setIsLoading(false);
+    localStorage.setItem("profileImage", res.data.profileImageURL);
     navigate("/");
+  }
+
+  function signup() {
+    const myPromise = handleSignup();
+    toast.promise(myPromise, {
+      loading: "Loading",
+      success: "Successfully Logged In",
+      error: "Wrong username or password",
+    });
   }
 
   return (
@@ -112,20 +119,9 @@ function Signup() {
                     Login
                   </Link>
                 </p>
-                {isLoading && (
-                  <button>
-                    <TailSpin
-                      style={{
-                        height: "1.6rem",
-                      }}
-                    />
-                  </button>
-                )}
-                {!isLoading && (
-                  <button className="sign-btn" onClick={handleSignup}>
-                    Sign Up
-                  </button>
-                )}
+                <button className="sign-btn" onClick={signup}>
+                  Sign Up
+                </button>
               </Buttons>
             </Inputs>
           </Box>

@@ -2,28 +2,39 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
-import { TailSpin } from "react-loading-icons";
+import toast from "react-hot-toast";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
   async function handleLogin() {
     if (!username || !password) alert("Please Enter all the details");
-    setIsLoading(true);
     const res = await axios.post(process.env.REACT_APP_BACKEND_URL + "login", {
       username: username,
       password: password,
     });
-    localStorage.setItem("name", res.data.name);
-    localStorage.setItem("username", res.data.username);
-    localStorage.setItem("userId", res.data.id);
-    localStorage.setItem("token", res.data.token);
-    setIsLoading(false);
-    navigate("/");
+    if (res.data.status === "invalid-username-or-password") {
+      toast.error("Invalid Username or password");
+    } else {
+      localStorage.setItem("name", res.data.name);
+      localStorage.setItem("username", res.data.username);
+      localStorage.setItem("userId", res.data.id);
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("profileImage", res.data.profileImageURL);
+      navigate("/");
+    }
+  }
+
+  function login() {
+    const myPromise = handleLogin();
+    toast.promise(myPromise, {
+      loading: "Loading",
+      success: "Successfully Logged In",
+      error: "Wrong username or password",
+    });
   }
 
   return (
@@ -90,21 +101,9 @@ function Login() {
                       </Link>
                     </p>
                   </div>
-
-                  {isLoading && (
-                    <button>
-                      <TailSpin
-                        style={{
-                          height: "1.6rem",
-                        }}
-                      />
-                    </button>
-                  )}
-                  {!isLoading && (
-                    <button className="login-btn" onClick={handleLogin}>
-                      Login
-                    </button>
-                  )}
+                  <button className="login-btn" onClick={login}>
+                    Login
+                  </button>
                 </Buttons>
               </div>
             </Inputs>
