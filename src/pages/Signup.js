@@ -14,9 +14,6 @@ function Signup() {
   const navigate = useNavigate();
 
   async function handleSignup() {
-    if (!name || !username || !email || !password) {
-      alert("Please enter all the informations");
-    }
     const res = await axios.post(
       process.env.REACT_APP_BACKEND_URL + "register",
       {
@@ -39,7 +36,17 @@ function Signup() {
     toast.promise(myPromise, {
       loading: "Loading",
       success: "Successfully Logged In",
-      error: "Wrong username or password",
+      error: (err) =>
+        `${err.response.data.message} ${
+          err.response.data.status === "weak-password"
+            ? toast(
+                "Minimum length 8\nMaximum length 100\nMust have uppercase letters\nMust have lowercase letters\nMust have at least 1 digits\nShould not have spaces",
+                {
+                  duration: 10000,
+                }
+              )
+            : ""
+        } `,
     });
   }
 
@@ -82,6 +89,7 @@ function Signup() {
                   onChange={(e) => {
                     setUsername(e.target.value);
                   }}
+                  required
                 />
               </div>
               <div className="input-fields">
