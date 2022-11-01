@@ -9,6 +9,9 @@ import { UserContext } from "./context/Context";
 import { useState } from "react";
 import UploadFileTemp from "./pages/UploadFileTemp";
 import { Toaster } from "react-hot-toast";
+import Post from "./components/Post";
+import JoinedClubs from "./components/JoinedClubs";
+import PopularClubs from "./components/PopularClubs";
 
 function App() {
   const [username, setUsername] = useState("");
@@ -46,6 +49,9 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/club" element={<Club />} />
           <Route path="/upload" element={<UploadFileTemp />} />
+          <Route path="/post" element={<Post />} />
+          <Route path="/joinedclubs" element={<JoinedClubs />} />
+          <Route path="/popularclubs" element={<PopularClubs />} />
         </Routes>
       </Router>
     </UserContext.Provider>
