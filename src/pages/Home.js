@@ -16,7 +16,7 @@ import HomeSkeleton from "../components/skeletons/HomeSkeleton";
 function Home() {
   const user = useContext(UserContext);
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const [navLoading, setNavLoading] = useState(false);
   const [homeLoading, setHomeLoading] = useState(false);
   const [postsData, setPostsData] = useState([]);
 
@@ -30,7 +30,7 @@ function Home() {
   }, []);
 
   async function secureCookie() {
-    setLoading(true);
+    setNavLoading(true);
     const { data } = await axios.post(
       process.env.REACT_APP_BACKEND_URL + "checktoken",
       { token: localStorage.getItem("token") }
@@ -38,8 +38,7 @@ function Home() {
     user.setUsername(data.username);
     user.setName(data.name);
     user.setProfileImage(data.profileImageURL);
-    console.log(data);
-    setLoading(false);
+    setNavLoading(false);
   }
 
   async function getAllPosts() {
@@ -55,8 +54,8 @@ function Home() {
 
   return (
     <div>
-      {loading && <NavSkeleton />}
-      {!loading && <Nav />}
+      {navLoading && <NavSkeleton />}
+      {!navLoading && <Nav />}
       {homeLoading && <HomeSkeleton />}
       {!homeLoading && (
         <HomeDiv>
