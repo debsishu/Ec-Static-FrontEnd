@@ -1,11 +1,25 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext , useState } from "react";
+import { Link , useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { FiSearch } from "react-icons/fi";
 import { IconContext } from "react-icons";
 import { UserContext } from "../../context/Context";
 
 function Nav() {
+
+  const [showMenu, setShowMenu] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleMenuClick = () => {
+    setShowMenu(!showMenu);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate("/login");
+  };
+
   const { name, profileImage } = useContext(UserContext);
   return (
     <div>
@@ -31,10 +45,11 @@ function Nav() {
             placeholder="Type something to search from the posts"
           />
         </SearchBar>
-        <Profile>
+
+        <Profile onClick={handleMenuClick}>
+          <ProfileHeader >
           <p>Hi, {name}</p>
-          <Link to="/profile">
-            <img
+            <img 
               className="profile"
               src={
                 profileImage === undefined
@@ -43,12 +58,25 @@ function Nav() {
               }
               alt="Profile Here"
             />
-          </Link>
+            </ProfileHeader>
+            {showMenu && (
+              <div className="user-menu-dropdown">
+                
+                <button>
+                    <Link to={`/profile`}>My Profile</Link>
+                </button>
+                <button onClick={handleLogout}>Logout </button>
+              </div>
+            )}
         </Profile>
+
+
       </NavBar>
     </div>
   );
 }
+
+const ProfileHeader = styled.div``;
 
 const Profile = styled.div`
   display: flex;
