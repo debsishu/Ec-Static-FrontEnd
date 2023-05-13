@@ -7,7 +7,7 @@ import { useState } from "react";
 import AllPosts from "../components/Home/AllPosts";
 import ClubModal from "../components/Home/ClubModal";
 import styled from "styled-components";
-import 'react-loading-skeleton/dist/skeleton.css'
+import "react-loading-skeleton/dist/skeleton.css";
 
 // Skeleton Imports
 import NavSkeleton from "../components/skeletons/NavSkeleton";
@@ -46,7 +46,8 @@ function Home() {
     const { data } = await axios.get(
       process.env.REACT_APP_BACKEND_URL + "allposts"
     );
-    setPostsData(data.post);
+    setPostsData(data.post.reverse());
+    console.log(data);
     setHomeLoading(false);
   }
 
@@ -60,7 +61,11 @@ function Home() {
       {!homeLoading && (
         <HomeDiv>
           <ClubModal clubs={dummyClubs} title={"Joined Clubs"} />
-          <AllPosts posts={postsData} />
+          <AllPosts
+            posts={postsData}
+            setPosts={setPostsData}
+            addHeight={true}
+          />
           <ClubModal clubs={dummyClubs} title={"Popular Clubs"} />
         </HomeDiv>
       )}

@@ -60,7 +60,7 @@ function Club() {
       },
     };
     const { data } = await axios.request(options);
-    setClubPosts(data.posts);
+    setClubPosts(data.posts.reverse());
     setClubPostLoading(false);
   }
 
@@ -126,7 +126,7 @@ function Club() {
                 </div>
               </ClubDetails>
             </div>
-            <AllPosts posts={clubPosts} />
+            <AllPosts posts={clubPosts} setPosts={setClubPosts} />
           </ClubBanner>
           <ClubModal clubs={dummyClubs} title={"Joined Clubs"} />
         </HomeDiv>
@@ -136,6 +136,15 @@ function Club() {
 }
 
 const ClubBanner = styled.div`
+  height: 87vh;
+  overflow: auto;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
   .club-banner {
     width: 100%;
     height: 15rem;
@@ -203,6 +212,7 @@ const HomeDiv = styled.div`
 `;
 
 const ClubInfoModal = styled.div`
+  width: 50%;
   h3 {
     font-weight: 600;
     margin-bottom: 1rem;

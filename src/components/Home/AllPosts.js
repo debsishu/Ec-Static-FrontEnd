@@ -1,12 +1,56 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { PlusSquare, TrendingUp } from "react-feather";
+import { UserContext } from "../../context/Context";
+import axios from "axios";
 
-function AllPosts({ posts }) {
+function AllPosts({ posts, addHeight, setPosts }) {
+  const user = useContext(UserContext);
+
+  function isLiked(post) {
+    const array = post.likeCount;
+    const username = user.username;
+    console.log(array.includes(username));
+    return array.includes(username);
+  }
+
+  async function handleLikeIncrease(index) {
+    const postID = posts[index]._id;
+    var options = {
+      method: "POST",
+      url: `${process.env.REACT_APP_BACKEND_URL}increaselike`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${localStorage.getItem("token")}`,
+      },
+      data: { id: postID },
+    };
+
+    try {
+      await axios.request(options);
+    } catch (e) {
+      console.log(e);
+    }
+
+    const post = posts[index];
+    const likeArray = posts[index].likeCount;
+    likeArray.push(user.username);
+    Object.assign(post.likeCount, likeArray);
+    setPosts(
+      posts.map((item, thisIndex) => {
+        return thisIndex === index ? post : item;
+      })
+    );
+  }
+
   return (
-    <MainDiv>
-      {posts.map((post) => (
+    <MainDiv
+      style={{
+        height: addHeight ? "87vh" : "",
+      }}
+    >
+      {posts.map((post, index) => (
         <Parent>
           {post.imageURL !== undefined && (
             <Image>
@@ -17,7 +61,12 @@ function AllPosts({ posts }) {
             <div>
               <Heading>
                 <SubHeading>
-                  <p className="clubName font-size">e\{post.clubID}</p>
+                  <Link
+                    to={`/club/${post.clubID}`}
+                    className="clubName font-size"
+                  >
+                    e\{post.clubID}
+                  </Link>
                   <p className="font-size">
                     <span>{post.username}</span> posted
                   </p>
@@ -26,10 +75,14 @@ function AllPosts({ posts }) {
               </Heading>
               <h3>{post.postTitle}</h3>
               {post.imageURL !== undefined && (
-                <p className="post-content">{post.postContent.substring(0, 320)}...</p>
+                <p className="post-content">
+                  {post.postContent.substring(0, 320)}...
+                </p>
               )}
               {post.imageURL === undefined && (
-                <p className="post-content">{post.postContent.substring(0, 400)}...</p>
+                <p className="post-content">
+                  {post.postContent.substring(0, 400)}...
+                </p>
               )}
             </div>
             <Button>
@@ -37,20 +90,45 @@ function AllPosts({ posts }) {
               view post
             </Button>
           </PostBody>
-          <Likes>
-            <div>
-              <TrendingUp width={20} />
-              <p>{post.likeCount}</p>
-            </div>
-          </Likes>
+          {isLiked(post) ? (
+            <LikeDisabled>
+              <div>
+                <TrendingUp width={20} />
+                <p>{post.likeCount.length}</p>
+              </div>
+            </LikeDisabled>
+          ) : (
+            <Likes onClick={() => handleLikeIncrease(index)}>
+              <div>
+                <TrendingUp width={20} />
+                <p>{post.likeCount.length}</p>
+              </div>
+            </Likes>
+          )}
         </Parent>
       ))}
     </MainDiv>
   );
 }
 
+const LikeDisabled = styled.div`
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #237bff;
+    padding: 0.4rem;
+    border-radius: 0.4rem;
+  }
+
+  p {
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+`;
+
 const MainDiv = styled.div`
-  height: 87vh;
+  /* height: 87vh; */
   overflow: auto;
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   scrollbar-width: none;
@@ -66,7 +144,7 @@ const Likes = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #237bff;
+    background-color: #323232;
     padding: 0.4rem;
     border-radius: 0.4rem;
   }
@@ -123,6 +201,7 @@ const Parent = styled.div`
   align-content: start;
 
   .font-size {
+    text-decoration: none;
     font-size: 0.85rem;
   }
 `;
@@ -153,7 +232,7 @@ const Heading = styled.div`
 const Image = styled.div`
   img {
     width: 20rem;
-    height: 100%;
+    aspect-ratio: 16 / 12;
     object-fit: cover;
     border-radius: 0.5rem;
   }

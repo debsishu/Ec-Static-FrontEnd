@@ -9,7 +9,7 @@ function ClubModal({ clubs, title }) {
       {clubs.map((name) => (
         <Links>
           <p>e\{name}</p>
-          <Button to={`/e/${name}`}>visit</Button>
+          <Button to={`/club/${name}`}>visit</Button>
         </Links>
       ))}
     </Parent>
@@ -18,7 +18,7 @@ function ClubModal({ clubs, title }) {
 
 const Parent = styled.div`
   h3 {
-		font-weight: 600;
+    font-weight: 600;
     margin-bottom: 1rem;
   }
 
@@ -43,11 +43,11 @@ const Links = styled.div`
 
 const Button = styled(Link)`
   text-decoration: none;
-	color: white;
+  color: white;
   background-color: #323232;
   border: 1px solid #424242;
-	padding: 0.2rem 0.8rem;
-	border-radius: 0.3rem;
+  padding: 0.2rem 0.8rem;
+  border-radius: 0.3rem;
 `;
 
 export default ClubModal;
