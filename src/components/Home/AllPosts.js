@@ -86,8 +86,10 @@ function AllPosts({ posts, addHeight, setPosts }) {
               )}
             </div>
             <Button>
-              <PlusSquare width={15} strokeWidth={3} />
-              view post
+              <Link to={`/post/${post.id}`} >
+                <PlusSquare width={15} strokeWidth={3} />
+                view post
+              </Link>
             </Button>
           </PostBody>
           {isLiked(post) ? (
