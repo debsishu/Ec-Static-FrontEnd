@@ -9,7 +9,7 @@ const GlobalStyle = createGlobalStyle`
 
 	body {
 		background-color: #171717;
-		font-family: 'Euclid Circular A', sans-serif;
+		font-family: "Satoshi", sans-serif;	
 	}
 `;
 

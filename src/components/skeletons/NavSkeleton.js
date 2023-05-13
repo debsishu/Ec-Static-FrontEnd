@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { IconContext } from "react-icons";
 import { FiSearch } from "react-icons/fi";
 
-function Nav() {
+function NavSkeleton() {
   return (
     <div>
       <NavBar>
@@ -99,4 +99,4 @@ const SearchBar = styled.div`
   }
 `;
 
-export default Nav;
+export default NavSkeleton;

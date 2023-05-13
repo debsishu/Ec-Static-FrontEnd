@@ -48,7 +48,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/club" element={<Club />} />
+          <Route path="/club/:name" element={<Club />} />
           <Route path="/upload" element={<UploadFileTemp />} />
           <Route path="/post" element={<Post />} />
           <Route path="/joinedclubs" element={<JoinedClubs />} />
