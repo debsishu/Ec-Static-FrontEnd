@@ -86,7 +86,7 @@ function AllPosts({ posts, addHeight, setPosts }) {
               )}
             </div>
             <Button>
-              <Link to={`/post/${post.id}`} >
+              <Link to={`/post/${post._id}`} >
                 <PlusSquare width={15} strokeWidth={3} />
                 view post
               </Link>
