@@ -27,12 +27,6 @@ function AllPosts({ posts, addHeight, setPosts }) {
       data: { id: postID },
     };
 
-    try {
-      await axios.request(options);
-    } catch (e) {
-      console.log(e);
-    }
-
     const post = posts[index];
     const likeArray = posts[index].likeCount;
     likeArray.push(user.username);
@@ -42,6 +36,12 @@ function AllPosts({ posts, addHeight, setPosts }) {
         return thisIndex === index ? post : item;
       })
     );
+    
+    try {
+      await axios.request(options);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   return (
