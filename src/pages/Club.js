@@ -8,6 +8,7 @@ import NavSkeleton from "../components/skeletons/NavSkeleton";
 import ClubModal from "../components/Home/ClubModal";
 import AllPosts from "../components/Home/AllPosts";
 import moment from "moment";
+import ClubSkeleton from "../components/skeletons/ClubSkeleton";
 
 function Club() {
   const clubName = useParams().name;
@@ -81,6 +82,7 @@ function Club() {
     <div>
       {navLoading && <NavSkeleton />}
       {!navLoading && <Nav />}
+      {clubPostLoading && <ClubSkeleton />}
       {!clubPostLoading && (
         <HomeDiv>
           {!clubDataLoading && (
