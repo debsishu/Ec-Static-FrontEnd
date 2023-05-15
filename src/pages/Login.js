@@ -138,7 +138,7 @@ const Buttons = styled.div`
 
   .login-btn {
     font-size: 0.9rem;
-    font-family: "Euclid Circular A", sans-serif;
+    font-family: "Satoshi", sans-serif;
     padding: 0.8rem 1.8rem;
     font-weight: 500;
   }
@@ -196,7 +196,7 @@ const Title = styled.div`
     display: flex;
     align-items: center;
     h1 {
-      font-family: "Gilroy-Bold", sans-serif;
+      font-family: "Satoshi", sans-serif;
       color: white;
     }
     img {
@@ -218,7 +218,7 @@ const Inputs = styled.div`
     color: white;
     border-radius: 0.3rem;
     margin-top: 0.4rem;
-    font-family: "Euclid Circular A", sans-serif;
+    font-family: "Satoshi", sans-serif;
   }
 
   input::placeholder {

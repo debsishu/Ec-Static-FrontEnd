@@ -36,7 +36,7 @@ function AllPosts({ posts, addHeight, setPosts }) {
         return thisIndex === index ? post : item;
       })
     );
-    
+
     try {
       await axios.request(options);
     } catch (e) {
@@ -85,7 +85,7 @@ function AllPosts({ posts, addHeight, setPosts }) {
                 </p>
               )}
             </div>
-            <Button>
+            <Button to={`/post/${post._id}`}>
               <PlusSquare width={15} strokeWidth={3} />
               view post
             </Button>

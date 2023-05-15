@@ -1,12 +1,19 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { FiSearch } from "react-icons/fi";
 import { IconContext } from "react-icons";
 import { UserContext } from "../../context/Context";
 
 function Nav() {
+  const navigate = useNavigate();
   const { name, profileImage } = useContext(UserContext);
+
+  function handleNavigate(path, isLogout) {
+    if (isLogout) localStorage.removeItem("token");
+    navigate(`/${path}`);
+  }
+
   return (
     <div>
       <NavBar>
@@ -33,9 +40,14 @@ function Nav() {
         </SearchBar>
         <Profile>
           <p>Hi, {name}</p>
-          <Link to="/profile">
+          <div
+            style={{
+              float: "right",
+            }}
+            className="dropdown"
+          >
             <img
-              className="profile"
+              className="profile dropbtn"
               src={
                 profileImage === undefined
                   ? "https://img.myloview.com/stickers/default-avatar-profile-in-trendy-style-for-social-media-user-icon-400-228654852.jpg"
@@ -43,7 +55,11 @@ function Nav() {
               }
               alt="Profile Here"
             />
-          </Link>
+            <div class="dropdown-content">
+              <p onClick={() => handleNavigate("profile", false)}>Profile</p>
+              <p onClick={() => handleNavigate("login", true)}>Logout</p>
+            </div>
+          </div>
         </Profile>
       </NavBar>
     </div>
@@ -57,6 +73,50 @@ const Profile = styled.div`
   font-size: 0.9rem;
   p {
     font-size: 0.8rem;
+  }
+
+  .dropbtn {
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .dropdown {
+    color: white;
+    position: relative;
+    display: inline-block;
+    font-weight: 600;
+  }
+
+  .dropdown-content {
+    color: white;
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #1e1e1e;
+    min-width: 110px;
+    z-index: 1;
+    border-radius: 0.5rem;
+    border: 1px solid #323232;
+  }
+
+  .dropdown-content p {
+    cursor: pointer;
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+  }
+
+  .dropdown-content p:hover {
+    background-color: #292929;
+    border-radius: 0.3rem;
+    border: 1px solid #323232;
+  }
+  .dropdown:hover .dropdown-content {
+    display: block;
   }
 `;
 
@@ -93,7 +153,7 @@ const SearchBar = styled.div`
     padding: 0.6rem;
     margin-left: 0.2rem;
     background-color: #2d2d2d;
-    font-family: "Euclid Circular A", sans-serif;
+    font-family: "Satoshi", sans-serif;
     border: none;
     outline: none;
     color: white;
