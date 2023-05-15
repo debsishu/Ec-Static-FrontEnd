@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { PlusSquare, TrendingUp } from "react-feather";
@@ -11,7 +11,6 @@ function AllPosts({ posts, addHeight, setPosts }) {
   function isLiked(post) {
     const array = post.likeCount;
     const username = user.username;
-    console.log(array.includes(username));
     return array.includes(username);
   }
 

@@ -9,6 +9,7 @@ import { UserContext } from "./context/Context";
 import { useState } from "react";
 import UploadFileTemp from "./pages/UploadFileTemp";
 import { Toaster } from "react-hot-toast";
+import PostDetails from "./pages/PostDetails";
 
 function App() {
   const [username, setUsername] = useState("");
@@ -46,6 +47,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/club/:name" element={<Club />} />
           <Route path="/upload" element={<UploadFileTemp />} />
+          <Route path="/post/:postID" element={<PostDetails />} />
         </Routes>
       </Router>
     </UserContext.Provider>

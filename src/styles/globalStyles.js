@@ -17,6 +17,10 @@ const GlobalStyle = createGlobalStyle`
 		background: linear-gradient(37deg, rgba(15,25,42,1) 0%, rgba(23,23,23,1) 25%, rgba(23,23,23,1) 61%, rgba(33,26,47,1) 100%);
 		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0f192a",endColorstr="#211a2f",GradientType=1); 
 	}
+
+	button, a, input {
+		font-family: "Satoshi", sans-serif;		
+	}
 `;
 
 export default GlobalStyle;
